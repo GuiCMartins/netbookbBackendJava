@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### Firebase Account key ###
-!**/src/main/**/resources/
+!**/src/main/resources/
