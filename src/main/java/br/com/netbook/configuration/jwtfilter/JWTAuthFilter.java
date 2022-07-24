@@ -15,6 +15,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
 
 import br.com.netbook.dto.exceptions.ApiErrorResponse;
 import br.com.netbook.exceptions.ApiException;
@@ -31,9 +32,10 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 			System.out.println(authorization);
 			if (authorization != null && authorization.startsWith("Bearer")) {
 				String token = authorization.split(" ")[1];
-
 				try {
-					FirebaseAuth.getInstance().verifyIdToken(token);
+					FirebaseToken firebaseToken = FirebaseAuth.getInstance().verifyIdToken(token);
+
+					response.getWriter().write(firebaseToken.getUid());
 				} catch (FirebaseAuthException e) {
 					e.printStackTrace();
 					throw new ApiException("Unauthorized", HttpStatus.UNAUTHORIZED);
