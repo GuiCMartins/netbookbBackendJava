@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### Firebase Account key ###
-!**/src/main/**/serviceAccountKey.json
+src/main/resources/serviceAccountKey.json
