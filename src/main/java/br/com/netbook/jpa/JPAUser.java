@@ -1,11 +1,13 @@
 package br.com.netbook.jpa;
 
 import java.time.LocalDate;
+import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -16,41 +18,38 @@ import javax.validation.constraints.Size;
 public class JPAUser {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 	@NotNull
-	private String firebaseId;
+	private String id;
 	@NotNull
 	@Size(min = 3, max = 255)
 	private String name;
 	@NotNull
+	@Column(name = "registration_date")
 	private LocalDate registrationDate;
 	@NotNull
 	private String email;
+	@ManyToMany
+	@JoinTable(name = "user_x_book")
+	private Set<JPABook> books;
 
 	public JPAUser() {
 	}
 
-	public JPAUser(String firebaseId, String name, String email) {
-		this.firebaseId = firebaseId;
+	public JPAUser(String id, String name, LocalDate registrationDate, String email, Set<JPABook> books) {
+		super();
+		this.id = id;
 		this.name = name;
+		this.registrationDate = registrationDate;
 		this.email = email;
+		this.books = books;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getFirebaseId() {
-		return firebaseId;
-	}
-
-	public void setFirebaseId(String firebaseId) {
-		this.firebaseId = firebaseId;
+	public void setId(String firebaseId) {
+		this.id = firebaseId;
 	}
 
 	public String getName() {
@@ -75,6 +74,14 @@ public class JPAUser {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Set<JPABook> getBooks() {
+		return books;
+	}
+
+	public void setBooks(Set<JPABook> books) {
+		this.books = books;
 	}
 
 	@PrePersist

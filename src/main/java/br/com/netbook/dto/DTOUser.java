@@ -1,50 +1,34 @@
 package br.com.netbook.dto;
 
 import java.time.LocalDate;
-
-import br.com.netbook.jpa.JPAUser;
+import java.util.Set;
 
 public class DTOUser {
 
-	private Long id;
-	private String firebaseId;
+	private String id;
 	private String name;
 	private LocalDate registrationDate;
 	private String email;
+	private Set<DTOBook> books;
 
 	public DTOUser() {
 	}
 
-	public DTOUser(Long id, String firebaseId, String name, String email, LocalDate registrationDate) {
+	public DTOUser(String id, String name, LocalDate registrationDate, String email, Set<DTOBook> books) {
+		super();
 		this.id = id;
-		this.firebaseId = firebaseId;
 		this.name = name;
 		this.registrationDate = registrationDate;
 		this.email = email;
+		this.books = books;
 	}
 
-	public DTOUser(JPAUser jpaUser) {
-		this.id = jpaUser.getId();
-		this.firebaseId = jpaUser.getFirebaseId();
-		this.name = jpaUser.getName();
-		this.registrationDate = jpaUser.getRegistrationDate();
-		this.email = jpaUser.getEmail();
-	}
-
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
-	}
-
-	public String getFirebaseId() {
-		return firebaseId;
-	}
-
-	public void setFirebaseId(String firebaseId) {
-		this.firebaseId = firebaseId;
 	}
 
 	public String getName() {
@@ -69,6 +53,14 @@ public class DTOUser {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Set<DTOBook> getBooks() {
+		return books;
+	}
+
+	public void setBooks(Set<DTOBook> books) {
+		this.books = books;
 	}
 
 }
